@@ -62,8 +62,6 @@ function main() {
   server.listen(config.app.port, () => {
     console.log(`App listening on port ${config.app.port}`);
   });
-
-  module.exports = server;
 }
 
 // Run the whole code
