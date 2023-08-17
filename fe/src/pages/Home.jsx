@@ -12,7 +12,7 @@ function Homepage() {
   const [filteredVideos, setFilteredVideos] = useState([]);
 
   useEffect(() => {
-    fetch("tourmaline-bienenstitch-46a1d5.netlify.app/api/video/thumbnail")
+    fetch("https://gg-tokped-play-clone-final-api.vercel.app/api/video/thumbnail")
       .then((response) => response.json())
       .then((body) => {
         setVideos(body.data);
