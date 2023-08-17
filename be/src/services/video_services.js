@@ -27,10 +27,10 @@ export default class VideoService {
   }
 
   // Update video
-  async updateVideo(videoID, title, urlThumbnail, url, tags, owner) {
+  async updateVideo(videoID, title, urlThumbnail, url, tag, owner) {
     try {
       const video = await this.videoRepo.getVideoByID(videoID);
-      return await this.videoRepo.updateVideo(video, title, urlThumbnail, url, tags, owner);
+      return await this.videoRepo.updateVideo(video, title, urlThumbnail, url, tag, owner);
     } catch (error) {
       return error;
     }

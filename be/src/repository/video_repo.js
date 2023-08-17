@@ -62,13 +62,13 @@ export default class VideoRepository {
   }
 
   // Update video
-  async updateVideo(video, title, urlThumbnail, url, tags, owner) {
+  async updateVideo(video, title, urlThumbnail, url, tag, owner) {
     try {
       if (urlThumbnail != undefined) {
         video.title = title;
         video.urlThumbnail = urlThumbnail;
         video.url = url;
-        video.tags = tags;
+        video.tags = tag;
         video.owner = owner;
       }
       return await product.save();

@@ -4,8 +4,8 @@ export default class ProductService {
   }
 
   // Create product
-  async createProduct(title, url, price, videoID) {
-    return await this.productRepo.createProduct(title, url, price, videoID);
+  async createProduct(title, url, urlThumbnail, price, videoID) {
+    return await this.productRepo.createProduct(title, url, urlThumbnail, price, videoID);
   }
 
   // Get product

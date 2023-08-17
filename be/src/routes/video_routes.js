@@ -1,6 +1,7 @@
 import bodyParser from "body-parser";
 import express from "express";
 import { sendError, sendSuccess } from "../utils/response.js";
+import { videoSchema } from "./validation/videoSchema.js";
 
 export default class VideoRouter {
   constructor(videoController) {
@@ -11,7 +12,22 @@ export default class VideoRouter {
   setupRoutes() {
     this.router.use(bodyParser.json());
 
-    
+    const validate = (schema) => async (req, res, next) => {
+      try {
+        await schema.validate({
+          body: req.body,
+          query: req.query,
+          params: req.params,
+        });
+        return next();
+      } catch (err) {
+        return sendError(res, {
+          type: err.name,
+          message: err.message
+        }, 500)
+      }
+    };
+
     // Get all videos
     this.router.get("/", async (req, res) => {
       try {
@@ -23,10 +39,10 @@ export default class VideoRouter {
     });
 
     // Create video
-    this.router.post("/", async (req, res) => {
+    this.router.post("/", validate(videoSchema), async (req, res) => {
       try {
         const body = req.body;
-        await this.videoController.createVideo(body.title, body.urlThumbnail, body.url, body.tags, body.owner);
+        await this.videoController.createVideo(body.title, body.urlThumbnail, body.url, body.tag, body.owner);
         sendSuccess(res, undefined, "Video successfully created.");
       } catch (error) {
         sendError(res);
@@ -56,11 +72,11 @@ export default class VideoRouter {
     });
 
     // Update video
-    this.router.patch("/:id", async (req, res) => {
+    this.router.patch("/:id", validate(videoSchema), async (req, res) => {
       try {
         const videoID = req.params.id;
         const body = req.body;
-        await this.videoController.updateVideo(videoID, body.title, body.urlThumbnail, body.url, body.tags, body.owner);
+        await this.videoController.updateVideo(videoID, body.title, body.urlThumbnail, body.url, body.tag, body.owner);
         sendSuccess(res, undefined, "Successfully updated video.");
       } catch (error) {
         sendError(res);

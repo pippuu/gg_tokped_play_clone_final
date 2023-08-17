@@ -7,7 +7,7 @@ const Video = model("Video", videoSchema);
 
 export default class ProductRepository {
   // Create product
-  async createProduct(title, url, price, videoID) {
+  async createProduct(title, url, urlThumbnail, price, videoID) {
     // Cast string to objectId
     const objectID = new mongoose.Types.ObjectId(videoID);
     const video = await Video.findById(objectID);
@@ -20,6 +20,7 @@ export default class ProductRepository {
       const newProduct = new Product({
         title: title,
         url: url,
+        urlThumbnail: urlThumbnail,
         price: price,
         videoID: videoID,
       });
@@ -62,18 +63,11 @@ export default class ProductRepository {
   // Update product
   async updateProduct(product, params) {
     try {
-      if (params.title != undefined) {
         product.title = params.title;
-      }
-      if (params.url != undefined) {
         product.url = params.url;
-      }
-      if (params.price != undefined) {
+        product.urlThumbnail = params.urlThumbnail;
         product.price = params.price;
-      }
-      if (params.videoID != undefined) {
         product.videoID = params.videoID;
-      }
       return await product.save();
     } catch (error) {
       return error;

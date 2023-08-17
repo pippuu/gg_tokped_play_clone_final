@@ -1,6 +1,7 @@
 import bodyParser from "body-parser";
 import express from "express";
 import { sendError, sendSuccess } from "../utils/response.js";
+import { commentSchema } from "./validation/commentSchema.js";
 
 export default class CommentRouter {
   constructor(commentController) {
@@ -11,8 +12,24 @@ export default class CommentRouter {
   setupRoutes() {
     this.router.use(bodyParser.json());
 
+    const validate = (schema) => async (req, res, next) => {
+      try {
+        await schema.validate({
+          body: req.body,
+          query: req.query,
+          params: req.params,
+        });
+        return next();
+      } catch (err) {
+        return sendError(res, {
+          type: err.name,
+          message: err.message
+        }, 500)
+      }
+    };
+
     // Create comment
-    this.router.post('/', async (req, res) => {
+    this.router.post('/', validate(commentSchema), async (req, res) => {
       try {
         const body = req.body;
         await this.commentController.createComment(body.username, body.comment, body.videoID);
@@ -55,7 +72,7 @@ export default class CommentRouter {
     })
 
     // Update comments
-    this.router.patch('/:id', async (req, res) => {
+    this.router.patch('/:id', validate(commentSchema), async (req, res) => {
       try {
         const commentID = req.params.id;
         const body = req.body;

@@ -4,8 +4,14 @@ export default class ProductController {
   }
 
   // Create product
-  async createProduct(title, url, price, videoID) {
-      return await this.productService.createProduct(title, url, price, videoID);
+  async createProduct(title, url, urlThumbnail, price, videoID) {
+    return await this.productService.createProduct(
+      title,
+      url,
+      urlThumbnail,
+      price,
+      videoID
+    );
   }
 
   // Get product
@@ -29,7 +35,7 @@ export default class ProductController {
   }
 
   // Delete product
-  async deleteProduct(productID) {  
+  async deleteProduct(productID) {
     return await this.productService.deleteProduct(productID);
   }
 }
