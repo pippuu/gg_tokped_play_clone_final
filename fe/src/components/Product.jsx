@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Box } from "@chakra-ui/react";
 
-export default function Product({ id, title, price, url }) {
+export default function Product({ id, title, price, url, urlThumbnail }) {
   const innerBoxStyles = {
     display: "flex",
     flexDirection: "column",
@@ -38,17 +38,17 @@ export default function Product({ id, title, price, url }) {
         key={id}
         style={{
           color: "white",
-          height: "100%",
-          width: "100%",
+          width: "150px",
+          height: "100px",
           backgroundColor: "white",
-          backgroundImage: `url(https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png)`,
+          backgroundImage: `url(${urlThumbnail})`,
           backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center center",
           cursor: "pointer",
         }}
       ></Box>
-      <Box p="2">
+      <Box height="100%" width="100%" p="2">
         <p>{title}</p>
         <p>Rp {price}</p>
       </Box>

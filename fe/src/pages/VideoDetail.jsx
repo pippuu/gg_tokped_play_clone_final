@@ -21,11 +21,10 @@ export default function VideoDetail() {
         comment: commentText,
         videoID: id,
       };
-      fetch("/api/comment/", {
+      fetch("https://gg-tokped-play-clone-final-api.vercel.app/api/comment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // Add any other headers you might need, such as authorization headers
         },
         body: JSON.stringify(newComment),
       })
@@ -42,7 +41,7 @@ export default function VideoDetail() {
   };
 
   useEffect(() => {
-    fetch(`/api/video/${id}`)
+    fetch(`https://gg-tokped-play-clone-final-api.vercel.app/api/video/${id}`)
       .then((response) => response.json())
       .then((body) => {
         setCurrentVideo(body.data);
@@ -53,7 +52,7 @@ export default function VideoDetail() {
   }, [id]);
 
   useEffect(() => {
-    fetch(`/api/comment/video/${id}`)
+    fetch(`https://gg-tokped-play-clone-final-api.vercel.app/api/comment/video/${id}`)
       .then((response) => response.json())
       .then((body) => {
         const tempComments = [];
@@ -72,7 +71,7 @@ export default function VideoDetail() {
   }, [id]);
 
   useEffect(() => {
-    fetch(`/api/product/video/${id}`)
+    fetch(`https://gg-tokped-play-clone-final-api.vercel.app/api/product/video/${id}`)
       .then((response) => response.json())
       .then((body) => {
         setProducts(body.data);
@@ -112,6 +111,7 @@ export default function VideoDetail() {
               title={product.title}
               price={product.price}
               url={product.url}
+              urlThumbnail={product.urlThumbnail}
             />
           ))}
         </Flex>
