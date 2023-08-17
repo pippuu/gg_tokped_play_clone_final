@@ -15,7 +15,7 @@ export default class ProductRepository {
     if (!video) {
       throw new Error(`VideoID can't be found.`);
     }
-    
+
     try {
       const newProduct = new Product({
         title: title,
@@ -63,11 +63,11 @@ export default class ProductRepository {
   // Update product
   async updateProduct(product, params) {
     try {
-        product.title = params.title;
-        product.url = params.url;
-        product.urlThumbnail = params.urlThumbnail;
-        product.price = params.price;
-        product.videoID = params.videoID;
+      product.title = params.title;
+      product.url = params.url;
+      product.urlThumbnail = params.urlThumbnail;
+      product.price = params.price;
+      product.videoID = params.videoID;
       return await product.save();
     } catch (error) {
       return error;
